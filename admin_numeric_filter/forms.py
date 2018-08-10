@@ -10,6 +10,13 @@ class SingleNumericForm(forms.Form):
         self.fields[name] = forms.FloatField(label='', required=False, 
             widget=forms.NumberInput(attrs={'placeholder': _('Value')}))        
 
+    class Media:
+        css = {
+            'all': (
+                'css/admin-numeric-filter.css',
+            )
+        }
+
 
 class RangeNumericForm(forms.Form):
     name = None
@@ -19,9 +26,16 @@ class RangeNumericForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         self.fields[self.name + '_from'] = forms.FloatField(label='', required=False, 
-            widget=forms.NumberInput(attrs={'placeholder': _('From'),}))
+            widget=forms.NumberInput(attrs={'placeholder': _('From')}))
         self.fields[self.name + '_to'] = forms.FloatField(label='', required=False, 
-            widget=forms.NumberInput(attrs={'placeholder': _('To'),}))
+            widget=forms.NumberInput(attrs={'placeholder': _('To')}))
+
+    class Media:
+        css = {
+            'all': (
+                'css/admin-numeric-filter.css',
+            )
+        }
 
 
 class SliderNumericForm(RangeNumericForm):
