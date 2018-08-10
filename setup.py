@@ -18,4 +18,5 @@ setup(
         'Intended Audience :: Developers',
         'Framework :: Django',
     ],
-    keywords="django admin numeric filter",
+    keywords="django admin numeric filter"
+)
