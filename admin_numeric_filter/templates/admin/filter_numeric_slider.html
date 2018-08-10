@@ -1,0 +1,29 @@
+{% load i18n %}
+
+{% with choices.0 as choice %}
+    <form method="get" class="admin-numeric-filter-wrapper">
+        <h3>{% blocktrans with filter_title=title %} By {{ filter_title }} {% endblocktrans %}</h3>
+
+        <div class="admin-numeric-filter-slider-tooltips">
+            <span class="admin-numeric-filter-slider-tooltip-from">{{ choice.value_from }}</span>
+            <span class="admin-numeric-filter-slider-tooltip-to">{{ choice.value_to }}</span>
+        </div><!-- /.admin-numeric-filter-slider-tooltips -->
+
+        <div class="admin-numeric-filter-slider" data-min="{{ choice.min }}" data-max="{{ choice.max }}">
+        </div><!-- /.admin-numeric-filter-slider -->
+
+        <div class="admin-numeric-filter-wrapper-group hidden">
+            {{ choice.form.as_p }}
+        </div><!-- /.filter-numeric-filter-wrapper-group -->
+
+        {% for k, v in choice.get_query.items %}
+            {% if not k == choice.parameter_name|add:'_from' and not k == choice.parameter_name|add:'_to' %}
+                <input type="hidden" name="{{ k }}" value="{{ v }}">
+            {% endif %}
+        {% endfor %}
+
+        <button type="submit" class="submit">{% trans 'Apply' %}</button>
+
+        {{ choice.form.media }}
+    </form>
+{% endwith %}

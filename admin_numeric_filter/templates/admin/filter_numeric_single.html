@@ -1,0 +1,17 @@
+{% load i18n %}
+
+{% with choices.0 as choice %}
+    <form method="get" class="admin-numeric-filter-wrapper">
+        <h3>{% blocktrans with filter_title=title %} By {{ filter_title }} {% endblocktrans %}</h3>
+
+        {{ choice.form.as_p }}
+
+        {% for k, v in choice.get_query.items %}
+            {% if not k == choice.parameter_name %}
+                <input type="hidden" name="{{ k }}" value="{{ v }}">
+            {% endif %}
+        {% endfor %}
+
+        <button type="submit" class="submit">{% trans 'Apply' %}</button>
+    </form>
+{% endwith %}

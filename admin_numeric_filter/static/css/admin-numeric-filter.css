@@ -1,0 +1,111 @@
+#changelist-filter .admin-numeric-filter-wrapper {
+    border-bottom: 1px solid #eaeaea;
+    overflow: hidden;
+    padding: 0 15px 15px 15px;
+}
+
+#changelist-filter .admin-numeric-filter-wrapper h3 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#changelist-filter .admin-numeric-filter-wrapper p {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#changelist-filter .admin-numeric-filter-wrapper p label {
+    color: #999;
+    display: block;
+    font-size: 13px;
+    margin: 0 0 3px 0;
+}
+
+#changelist-filter .admin-numeric-filter-wrapper p input {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#changelist-filter .admin-numeric-filter-wrapper p:first-child {
+    margin-right: 5px;
+}
+
+#changelist-filter .admin-numeric-filter-wrapper p:last-child {
+    margin-left: 5px;
+}
+
+#changelist-filter .admin-numeric-filter-wrapper button {
+    background-color: transparent;
+    border: 0;
+    color: #447e9b;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0;
+}
+
+#changelist-filter .admin-numeric-filter-wrapper-group {
+    display: flex;
+    flex-direction: row;
+}
+
+#changelist-filter .admin-numeric-filter-wrapper-group.hidden {
+    display: none;
+}
+
+#changelist-filter .admin-numeric-filter-slider {
+    background-color: rgba(0, 0, 0, .12);
+    border: 0;
+    box-shadow: none;
+    height: 3px;
+    margin: 15px 0;
+}
+
+#changelist-filter .admin-numeric-filter-slider .noUi-handle {
+    background-color: #fff;
+    border: 0;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    cursor: pointer;
+    height: 14px;
+    right: -13px;
+    transition: all .2s ease;
+    width: 14px;
+}
+
+#changelist-filter .admin-numeric-filter-slider .noUi-handle:focus,
+#changelist-filter .admin-numeric-filter-slider .noUi-handle:hover {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3), 0 0 0 6px rgba(121, 174, 200, .2);
+    outline: none;
+}
+
+#changelist-filter .admin-numeric-filter-slider .noUi-handle-upper {
+    right: -1px;
+}
+
+#changelist-filter .admin-numeric-filter-slider .noUi-handle:after {
+    content: none;
+}
+
+#changelist-filter .admin-numeric-filter-slider .noUi-handle:before {
+    content: none;
+}
+
+#changelist-filter .admin-numeric-filter-slider .noUi-connect {
+    background-color: #79aec8;
+}
+
+#changelist-filter .admin-numeric-filter-slider-tooltips {
+    color: #999;
+    display: flex;
+    font-size: 12px;
+    flex-direction: row;
+    margin: 10px 0;
+}
+
+#changelist-filter .admin-numeric-filter-slider-tooltip-from {
+    margin: 0 auto 0 0;
+}
