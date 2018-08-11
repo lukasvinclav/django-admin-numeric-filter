@@ -55,13 +55,15 @@ class RangeNumericFilter(admin.FieldListFilter):
 
     def queryset(self, request, queryset):
         filters = {}
-        
-        if self.used_parameters.get(self.parameter_name + '_from', None) is not None:
+
+        value_from = self.used_parameters.get(self.parameter_name + '_from', None)
+        if value_from is not None and value_from != '':
             filters.update({
                 self.parameter_name + '__gte': self.used_parameters.get(self.parameter_name + '_from', None),
             })
 
-        if self.used_parameters.get(self.parameter_name + '_to', None) is not None:
+        value_to = self.used_parameters.get(self.parameter_name + '_to', None)
+        if value_to is not None and value_to != '':
             filters.update({
                 self.parameter_name + '__lte': self.used_parameters.get(self.parameter_name + '_to', None),
             })
