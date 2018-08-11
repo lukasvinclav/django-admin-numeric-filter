@@ -1,5 +1,7 @@
 # django-admin-numeric-filter
 
+![Screenshot](https://raw.githubusercontent.com/lukasvinclav/django-admin-numeric-filter/screenshot.png)
+
 ## Getting started
 
 1. Install package directly from GitHub
@@ -19,11 +21,12 @@ from admin_numeric_filter.admin import SingleNumericFilter, RangeNumericFilter, 
 
 from .models import YourModel
 
+
 @admin.register(YourModel)
 class YourModelAdmin(admin.ModelAdmin):
     list_filter = (
-        ('field_A', SingleNumericFilter), # Single field search, **gte** lookup
-        ('field_B', RangeNumericFilter), # Range search, **gte** and **lte** lookup
+        ('field_A', SingleNumericFilter), # Single field search, __gte lookup
+        ('field_B', RangeNumericFilter), # Range search, __gte and __lte lookup
         ('field_C', SliderNumericFilter), # Same as range above but with slider
     )
 ```

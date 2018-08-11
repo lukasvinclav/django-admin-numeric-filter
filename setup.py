@@ -3,6 +3,8 @@ from setuptools import setup
 
 setup(
     name='django-admin-numeric-filter',
+    short_description='Numeric filters for Django admin',
+    long_description=open('README.md').read(),
     version='0.1.0',
     packages=[
         'admin_numeric_filter',
