@@ -1,6 +1,6 @@
 # django-admin-numeric-filter
 
-![Screenshot](https://raw.githubusercontent.com/lukasvinclav/django-admin-numeric-filter/screenshot.png)
+![Screenshot](https://github.com/lukasvinclav/django-admin-numeric-filter/raw/master/screenshot.png)
 
 ## Getting started
 
