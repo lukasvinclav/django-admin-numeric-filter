@@ -47,7 +47,7 @@ class SliderNumericForm(RangeNumericForm):
             )
         }
         js = (
-            'js/wNumb.js',
+            'js/wNumb.min.js',
             'js/nouislider.min.js',
             'js/admin-numeric-filter.js',
         )
