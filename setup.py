@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 from setuptools import setup
 
+
+with open('README.md') as f:
+    long_description = f.read()
+
 setup(
     name='django-admin-numeric-filter',
     short_description='Numeric filters for Django admin',
-    long_description=open('README.md').read(),
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     version='0.1.0',
     packages=[
         'admin_numeric_filter',
