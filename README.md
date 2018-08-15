@@ -4,7 +4,11 @@
 
 ## Getting started
 
-1. Install package directly from GitHub
+1. Installation
+
+```bash
+pip install django-admin-numeric-filter
+```
 
 ```bash
 pip install git+https://git@github.com/lukasvinclav/django-admin-numeric-filter.git
