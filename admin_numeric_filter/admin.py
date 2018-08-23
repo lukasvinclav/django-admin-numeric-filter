@@ -6,12 +6,15 @@ from .forms import RangeNumericForm, SingleNumericForm, SliderNumericForm
 
 
 class SingleNumericFilter(admin.FieldListFilter):
+    request = None
     parameter_name = None
     template = 'admin/filter_numeric_single.html'
 
     def __init__(self, field, request, params, model, model_admin, field_path):        
         super().__init__(field, request, params, model, model_admin, field_path)
-        
+
+        self.request = request
+
         if self.parameter_name is None:
             self.parameter_name = self.field.name
 
@@ -31,17 +34,21 @@ class SingleNumericFilter(admin.FieldListFilter):
 
     def choices(self, changelist):
         return ({
+            'request': self.request,
             'form': SingleNumericForm(name=self.parameter_name, data={self.parameter_name: self.value()}),
         }, )
 
 
 class RangeNumericFilter(admin.FieldListFilter):
+    request = None
     parameter_name = None
     template = 'admin/filter_numeric_range.html'
 
-    def __init__(self, field, request, params, model, model_admin, field_path):        
+    def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
-        
+
+        self.request = request
+
         if self.parameter_name is None:
             self.parameter_name = self.field.name
 
@@ -78,6 +85,7 @@ class RangeNumericFilter(admin.FieldListFilter):
 
     def choices(self, changelist):
         return ({
+            'request': self.request,
             'form': RangeNumericForm(name=self.parameter_name, data={
                 self.parameter_name + '_from': self.used_parameters.get(self.parameter_name + '_from', None),
                 self.parameter_name + '_to': self.used_parameters.get(self.parameter_name + '_to', None),
@@ -103,6 +111,7 @@ class SliderNumericFilter(RangeNumericFilter):
         max = self.q.all().aggregate(max=Max(self.parameter_name)).get('max', 0)
 
         return ({
+            'request': self.request,
             'min': min,
             'max': max,
             'value_from': self.used_parameters.get(self.parameter_name + '_from', min),

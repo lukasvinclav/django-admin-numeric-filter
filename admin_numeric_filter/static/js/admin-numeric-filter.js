@@ -8,8 +8,8 @@ for (var i = 0; i < sliders.length; i++) {
     }
 
     if (slider) {
-        var from = parseInt(slider.closest('.admin-numeric-filter-wrapper').querySelectorAll('input')[0].value);
-        var to = parseInt(slider.closest('.admin-numeric-filter-wrapper').querySelectorAll('input')[1].value);
+        var from = parseInt(slider.closest('.admin-numeric-filter-wrapper').querySelectorAll('.admin-numeric-filter-wrapper-group input')[0].value);
+        var to = parseInt(slider.closest('.admin-numeric-filter-wrapper').querySelectorAll('.admin-numeric-filter-wrapper-group input')[1].value);
 
         var min = parseInt(slider.getAttribute('data-min'));
         var max = parseInt(slider.getAttribute('data-max'));
@@ -29,8 +29,8 @@ for (var i = 0; i < sliders.length; i++) {
 
         slider.noUiSlider.on('update', function(values, handle) {                        
             var parent = this.target.closest('.admin-numeric-filter-wrapper');
-            var from = parent.querySelectorAll('input')[0];
-            var to = parent.querySelectorAll('input')[1];
+            var from = parent.querySelectorAll('.admin-numeric-filter-wrapper-group input')[0];
+            var to = parent.querySelectorAll('.admin-numeric-filter-wrapper-group input')[1];
             
             parent.querySelectorAll('.admin-numeric-filter-slider-tooltip-from')[0].innerHTML = values[0];
             parent.querySelectorAll('.admin-numeric-filter-slider-tooltip-to')[0].innerHTML = values[1];
