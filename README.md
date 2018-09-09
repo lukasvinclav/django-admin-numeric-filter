@@ -1,14 +1,14 @@
 # django-admin-numeric-filter
 
+![](https://img.shields.io/badge/Version-0.1.1-orange.svg?style=flat-square) 
+![](https://img.shields.io/badge/Django-2.0+-green.svg?style=flat-square)
+![](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square) 
+
 ![Screenshot](https://github.com/lukasvinclav/django-admin-numeric-filter/raw/master/screenshot.png)
 
-## Default slider options
+django-admin-numeric-filter provides you several filter classes for Django admin which you can use to filter results in change list. It works in **list_filter** when a field name is defined as list where the first value is field name and second one is custom filter class (you can find classes below). 
 
-| Django model field                       | Step                     | Decimal places             |
-|------------------------------------------|--------------------------|----------------------------|
-| django.db.models.fields.DecimalField()   | Based on decimal places  | max precision from DB      |
-| django.db.models.fields.FloatField()     | Based on decimal places  | field decimal_places attr  |
-| django.db.models.fields.IntegerField()   | 1                        | 0                          |
+Don't forget to inherit your model admin from **admin_actions.admin.NumericFilterModelAdmin** to load custom CSS styles and JavaScript files declared in inner Media class.
 
 ## Getting started
 
@@ -41,3 +41,20 @@ class YourModelAdmin(NumericFilterModelAdmin):
         ('field_C', SliderNumericFilter), # Same as range above but with slider
     )
 ```
+
+## Filter classes
+
+| Class name                               | Description                            |
+|------------------------------------------|----------------------------------------|
+| admin_actions.admin.SingleNumericFilter  | Single field search, __gte lookup      |
+| admin_actions.admin.RangeNumericFilter   | Range search, __gte and __lte lookup   |
+| admin_actions.admin.SliderNumericFilter  | Same as range above but with slider    |
+
+
+## Slider default options for certain field types
+
+| Django model field                       | Step                     | Decimal places             |
+|------------------------------------------|--------------------------|----------------------------|
+| django.db.models.fields.DecimalField()   | Based on decimal places  | max precision from DB      |
+| django.db.models.fields.FloatField()     | Based on decimal places  | field decimal_places attr  |
+| django.db.models.fields.IntegerField()   | 1                        | 0                          |
