@@ -1,8 +1,24 @@
 from django.contrib import admin
 from django.contrib.admin.utils import reverse_field_path
-from django.db.models import Min, Max
+from django.db.models import Max, Min
+from django.db.models.fields import DecimalField, FloatField, IntegerField
 
 from .forms import RangeNumericForm, SingleNumericForm, SliderNumericForm
+
+
+class NumericFilterModelAdmin(admin.ModelAdmin):
+    class Media:
+        css = {
+            'all': (
+                'js/nouislider.min.css',
+                'css/admin-numeric-filter.css',
+            )
+        }
+        js = (
+            'js/wNumb.min.js',
+            'js/nouislider.min.js',
+            'js/admin-numeric-filter.js',
+        )
 
 
 class SingleNumericFilter(admin.FieldListFilter):
@@ -10,8 +26,11 @@ class SingleNumericFilter(admin.FieldListFilter):
     parameter_name = None
     template = 'admin/filter_numeric_single.html'
 
-    def __init__(self, field, request, params, model, model_admin, field_path):        
+    def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
+
+        if not isinstance(field, (DecimalField, IntegerField, FloatField)):
+            raise TypeError('Class {} is not supported for {}.'.format(type(self.field), self.__class__.__name__))
 
         self.request = request
 
@@ -35,6 +54,7 @@ class SingleNumericFilter(admin.FieldListFilter):
     def choices(self, changelist):
         return ({
             'request': self.request,
+            'parameter_name': self.parameter_name,
             'form': SingleNumericForm(name=self.parameter_name, data={self.parameter_name: self.value()}),
         }, )
 
@@ -46,6 +66,9 @@ class RangeNumericFilter(admin.FieldListFilter):
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
+
+        if not isinstance(field, (DecimalField, IntegerField, FloatField)):
+            raise TypeError('Class {} is not supported for {}.'.format(type(self.field), self.__class__.__name__))
 
         self.request = request
 
@@ -79,13 +102,14 @@ class RangeNumericFilter(admin.FieldListFilter):
 
     def expected_parameters(self):
         return [
-            '{}_from'.format(self.parameter_name), 
+            '{}_from'.format(self.parameter_name),
             '{}_to'.format(self.parameter_name), 
         ]
 
     def choices(self, changelist):
         return ({
             'request': self.request,
+            'parameter_name': self.parameter_name,
             'form': RangeNumericForm(name=self.parameter_name, data={
                 self.parameter_name + '_from': self.used_parameters.get(self.parameter_name + '_from', None),
                 self.parameter_name + '_to': self.used_parameters.get(self.parameter_name + '_to', None),
@@ -95,10 +119,12 @@ class RangeNumericFilter(admin.FieldListFilter):
 
 class SliderNumericFilter(RangeNumericFilter):
     template = 'admin/filter_numeric_slider.html'
+    field = None
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
 
+        self.field = field
         parent_model, reverse_path = reverse_field_path(model, field_path)
 
         if model == parent_model:
@@ -107,17 +133,36 @@ class SliderNumericFilter(RangeNumericFilter):
             self.q = parent_model._default_manager.all()
 
     def choices(self, changelist):
-        min = self.q.all().aggregate(min=Min(self.parameter_name)).get('min', 0)
-        max = self.q.all().aggregate(max=Max(self.parameter_name)).get('max', 0)
+        min_value = self.q.all().aggregate(min=Min(self.parameter_name)).get('min', 0)
+        max_value = self.q.all().aggregate(max=Max(self.parameter_name)).get('max', 0)
+
+        if isinstance(self.field, IntegerField):
+            step = 1
+            decimals = 0
+        elif isinstance(self.field, FloatField):
+            values = self.q.all().values_list(self.parameter_name, flat=True)
+            max_precision = max(str(value)[::-1].find('.') for value in values)
+            step = self._get_min_step(max_precision)
+            decimals = max_precision
+        elif isinstance(self.field, DecimalField):
+            decimals = self.field.decimal_places
+            step = self._get_min_step(self.field.decimal_places)
 
         return ({
+            'decimals': decimals,
+            'step': step,
+            'parameter_name': self.parameter_name,
             'request': self.request,
-            'min': min,
-            'max': max,
-            'value_from': self.used_parameters.get(self.parameter_name + '_from', min),
-            'value_to': self.used_parameters.get(self.parameter_name + '_to', max),
+            'min': min_value,
+            'max': max_value,
+            'value_from': self.used_parameters.get(self.parameter_name + '_from', min_value),
+            'value_to': self.used_parameters.get(self.parameter_name + '_to', max_value),
             'form': SliderNumericForm(name=self.parameter_name, data={
-                self.parameter_name + '_from': self.used_parameters.get(self.parameter_name + '_from', min),
-                self.parameter_name + '_to': self.used_parameters.get(self.parameter_name + '_to', max),
+                self.parameter_name + '_from': self.used_parameters.get(self.parameter_name + '_from', min_value),
+                self.parameter_name + '_to': self.used_parameters.get(self.parameter_name + '_to', max_value),
             })
         }, )
+
+    def _get_min_step(self, precision):
+        result_format = '{{:.{}f}}'.format(precision - 1)
+        return float(result_format.format(0) + '1')

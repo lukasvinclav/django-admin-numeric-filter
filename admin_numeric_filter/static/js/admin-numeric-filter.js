@@ -1,29 +1,18 @@
-var sliders = document.getElementsByClassName('admin-numeric-filter-slider');
-
-for (var i = 0; i < sliders.length; i++) {
-    var slider = sliders[i];
-
-    if (slider.classList.contains('noUi-target')) {
-        continue;
-    }
-
-    if (slider) {
-        var from = parseInt(slider.closest('.admin-numeric-filter-wrapper').querySelectorAll('.admin-numeric-filter-wrapper-group input')[0].value);
-        var to = parseInt(slider.closest('.admin-numeric-filter-wrapper').querySelectorAll('.admin-numeric-filter-wrapper-group input')[1].value);
-
-        var min = parseInt(slider.getAttribute('data-min'));
-        var max = parseInt(slider.getAttribute('data-max'));
+document.addEventListener('DOMContentLoaded', function() {
+    Array.from(document.getElementsByClassName('admin-numeric-filter-slider')).forEach(function(slider) {
+        var from = parseFloat(slider.closest('.admin-numeric-filter-wrapper').querySelectorAll('.admin-numeric-filter-wrapper-group input')[0].value);
+        var to = parseFloat(slider.closest('.admin-numeric-filter-wrapper').querySelectorAll('.admin-numeric-filter-wrapper-group input')[1].value);
 
         noUiSlider.create(slider, {
             start: [from, to],
-            step: 1,
+            step: parseFloat(slider.getAttribute('data-step')),
             connect: true,
             format: wNumb({
-                decimals: 0
+                decimals: parseFloat(slider.getAttribute('data-decimals'))
             }),
             range: {
-                'min': min,
-                'max': max
+                'min': parseFloat(slider.getAttribute('data-min')),
+                'max': parseFloat(slider.getAttribute('data-max'))
             }
         });
 
@@ -38,5 +27,5 @@ for (var i = 0; i < sliders.length; i++) {
             from.value = values[0];
             to.value = values[1];
         });
-    }
-}
+    });
+});

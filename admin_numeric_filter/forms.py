@@ -39,15 +39,4 @@ class RangeNumericForm(forms.Form):
 
 
 class SliderNumericForm(RangeNumericForm):
-    class Media:
-        css = {
-            'all': (
-                'js/nouislider.min.css',
-                'css/admin-numeric-filter.css',
-            )
-        }
-        js = (
-            'js/wNumb.min.js',
-            'js/nouislider.min.js',
-            'js/admin-numeric-filter.js',
-        )
+    pass

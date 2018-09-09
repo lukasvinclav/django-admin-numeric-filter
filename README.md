@@ -2,6 +2,14 @@
 
 ![Screenshot](https://github.com/lukasvinclav/django-admin-numeric-filter/raw/master/screenshot.png)
 
+## Default slider options
+
+| Django model field                       | Step                     | Decimal places             |
+|------------------------------------------|--------------------------|----------------------------|
+| django.db.models.fields.DecimalField()   | Based on decimal places  | max precision from DB      |
+| django.db.models.fields.FloatField()     | Based on decimal places  | field decimal_places attr  |
+| django.db.models.fields.IntegerField()   | 1                        | 0                          |
+
 ## Getting started
 
 1. Installation
@@ -14,20 +22,19 @@ pip install django-admin-numeric-filter
 pip install git+https://git@github.com/lukasvinclav/django-admin-numeric-filter.git
 ```
 
-2. Add **admin_numeric_filter** into **INSTALLED_APPS** in your setting file
+2. Add **admin_numeric_filter** into **INSTALLED_APPS** in your settings file before **django.contrib.admin**.
 
 ## Sample admin configuration
 
-```python
-from django.contrib import admin
-
-from admin_numeric_filter.admin import SingleNumericFilter, RangeNumericFilter, SliderNumericFilter
+```bash
+from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, \
+    SliderNumericFilter
 
 from .models import YourModel
 
 
 @admin.register(YourModel)
-class YourModelAdmin(admin.ModelAdmin):
+class YourModelAdmin(NumericFilterModelAdmin):
     list_filter = (
         ('field_A', SingleNumericFilter), # Single field search, __gte lookup
         ('field_B', RangeNumericFilter), # Range search, __gte and __lte lookup

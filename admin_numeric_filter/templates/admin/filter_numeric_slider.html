@@ -1,7 +1,6 @@
 {% load i18n %}
 
 {% with choices.0 as choice %}
-
     <form method="get" class="admin-numeric-filter-wrapper">
         {% for k, v in choice.request.GET.items %}
             {% if not k == choice.parameter_name|add:'_from' and not k == choice.parameter_name|add:'_to' %}
@@ -16,7 +15,7 @@
             <span class="admin-numeric-filter-slider-tooltip-to">{{ choice.value_to }}</span>
         </div><!-- /.admin-numeric-filter-slider-tooltips -->
 
-        <div class="admin-numeric-filter-slider" data-min="{{ choice.min }}" data-max="{{ choice.max }}">
+        <div class="admin-numeric-filter-slider" data-min="{{ choice.min }}" data-max="{{ choice.max }}" data-decimals="{{ choice.decimals }}" data-step="{{ choice.step }}">
         </div><!-- /.admin-numeric-filter-slider -->
 
         <div class="admin-numeric-filter-wrapper-group hidden">
@@ -24,7 +23,5 @@
         </div><!-- /.filter-numeric-filter-wrapper-group -->
 
         <button type="submit" class="submit">{% trans 'Apply' %}</button>
-
-        {{ choice.form.media }}
     </form>
 {% endwith %}
