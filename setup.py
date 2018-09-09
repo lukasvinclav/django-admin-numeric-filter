@@ -10,7 +10,7 @@ setup(
     short_description='Numeric filters for Django admin',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    version='0.1.1',
+    version='0.1.2',
     packages=[
         'admin_numeric_filter',
     ],
