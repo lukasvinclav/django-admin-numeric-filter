@@ -118,8 +118,12 @@ class RangeNumericFilter(admin.FieldListFilter):
 
 
 class SliderNumericFilter(RangeNumericFilter):
+    MAX_DECIMALS = 7
+    MAX_STEP = 7
+
     template = 'admin/filter_numeric_slider.html'
     field = None
+
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
@@ -137,16 +141,16 @@ class SliderNumericFilter(RangeNumericFilter):
         max_value = self.q.all().aggregate(max=Max(self.parameter_name)).get('max', 0)
 
         if isinstance(self.field, IntegerField):
-            step = 1
             decimals = 0
+            step = 1
         elif isinstance(self.field, FloatField):
             values = self.q.all().values_list(self.parameter_name, flat=True)
             max_precision = max(str(value)[::-1].find('.') for value in values)
+            decimals = self._get_decimals(max_precision)
             step = self._get_min_step(max_precision)
-            decimals = max_precision
         elif isinstance(self.field, DecimalField):
-            decimals = self.field.decimal_places
             step = self._get_min_step(self.field.decimal_places)
+            decimals = self._get_decimals(self.field.decimal_places)
 
         return ({
             'decimals': decimals,
@@ -162,6 +166,12 @@ class SliderNumericFilter(RangeNumericFilter):
                 self.parameter_name + '_to': self.used_parameters.get(self.parameter_name + '_to', max_value),
             })
         }, )
+
+    def _get_decimals(self, decimals):
+        if decimals >= self.MAX_DECIMALS:
+            return self.MAX_DECIMALS
+
+        return decimals
 
     def _get_min_step(self, precision):
         result_format = '{{:.{}f}}'.format(precision - 1)
