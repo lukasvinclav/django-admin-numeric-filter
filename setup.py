@@ -7,10 +7,12 @@ with open('README.md') as f:
 
 setup(
     name='django-admin-numeric-filter',
+    description='Numeric filters for Django admin',
     short_description='Numeric filters for Django admin',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    version='0.1.2',
+    version='0.1.3',
+    url='http://github.com/lukasvinclav/django-admin-numeric-filter',
     packages=[
         'admin_numeric_filter',
     ],
