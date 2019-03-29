@@ -26,11 +26,16 @@ pip install git+https://git@github.com/lukasvinclav/django-admin-numeric-filter.
 
 ## Sample admin configuration
 
-```bash
+```python
 from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, \
     SliderNumericFilter
 
 from .models import YourModel
+
+
+class CustomSliderNumericFilter(SliderNumericFilter):
+    MAX_DECIMALS = 2
+    STEP = 10
 
 
 @admin.register(YourModel)
@@ -39,6 +44,7 @@ class YourModelAdmin(NumericFilterModelAdmin):
         ('field_A', SingleNumericFilter), # Single field search, __gte lookup
         ('field_B', RangeNumericFilter), # Range search, __gte and __lte lookup
         ('field_C', SliderNumericFilter), # Same as range above but with slider
+        ('field_D', CustomSliderNumericFilter), # Filter with custom attributes
     )
 ```
 
