@@ -144,10 +144,8 @@ class SliderNumericFilter(RangeNumericFilter):
             decimals = 0
             step = 1
         elif isinstance(self.field, FloatField):
-            values = self.q.all().values_list(self.parameter_name, flat=True)
-            max_precision = max(str(value)[::-1].find('.') for value in values)
-            decimals = self._get_decimals(max_precision)
-            step = self._get_min_step(max_precision)
+            decimals = self.MAX_DECIMALS
+            step = self._get_min_step(self.MAX_DECIMALS)
         elif isinstance(self.field, DecimalField):
             step = self._get_min_step(self.field.decimal_places)
             decimals = self._get_decimals(self.field.decimal_places)
