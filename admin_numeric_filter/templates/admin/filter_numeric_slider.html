@@ -10,18 +10,26 @@
 
         <h3>{% blocktrans with filter_title=title %}By {{ filter_title }}{% endblocktrans %}</h3>
 
-        <div class="admin-numeric-filter-slider-tooltips">
-            <span class="admin-numeric-filter-slider-tooltip-from">{{ choice.value_from }}</span>
-            <span class="admin-numeric-filter-slider-tooltip-to">{{ choice.value_to }}</span>
-        </div><!-- /.admin-numeric-filter-slider-tooltips -->
+        {% if choice.min and choice.max and choice.step %}
+            <div class="admin-numeric-filter-slider-tooltips">
+                <span class="admin-numeric-filter-slider-tooltip-from">{{ choice.value_from }}</span>
+                <span class="admin-numeric-filter-slider-tooltip-to">{{ choice.value_to }}</span>
+            </div><!-- /.admin-numeric-filter-slider-tooltips -->
 
-        <div class="admin-numeric-filter-slider" data-min="{{ choice.min }}" data-max="{{ choice.max }}" data-decimals="{{ choice.decimals }}" data-step="{{ choice.step }}">
-        </div><!-- /.admin-numeric-filter-slider -->
+            <div class="admin-numeric-filter-slider" data-min="{{ choice.min }}" data-max="{{ choice.max }}" data-decimals="{{ choice.decimals }}" data-step="{{ choice.step }}">
+            </div><!-- /.admin-numeric-filter-slider -->
 
-        <div class="admin-numeric-filter-wrapper-group hidden">
-            {{ choice.form.as_p }}
-        </div><!-- /.filter-numeric-filter-wrapper-group -->
+            <div class="admin-numeric-filter-wrapper-group hidden">
+                {{ choice.form.as_p }}
+            </div><!-- /.filter-numeric-filter-wrapper-group -->
 
-        <button type="submit" class="submit">{% trans 'Apply' %}</button>
+            <button type="submit" class="submit">{% trans 'Apply' %}</button>
+        {% else %}
+            <div class="admin-numeric-filter-slider-error">
+                <p>
+                    {% trans 'No enough data.' %}
+                </p>
+            </div><!-- /.admin-numeric-filter-slider-error -->
+        {% endif %}
     </form>
 {% endwith %}

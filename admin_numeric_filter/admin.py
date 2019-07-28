@@ -103,7 +103,7 @@ class RangeNumericFilter(admin.FieldListFilter):
     def expected_parameters(self):
         return [
             '{}_from'.format(self.parameter_name),
-            '{}_to'.format(self.parameter_name), 
+            '{}_to'.format(self.parameter_name),
         ]
 
     def choices(self, changelist):
@@ -136,8 +136,18 @@ class SliderNumericFilter(RangeNumericFilter):
             self.q = parent_model._default_manager.all()
 
     def choices(self, changelist):
-        min_value = self.q.all().aggregate(min=Min(self.parameter_name)).get('min', 0)
-        max_value = self.q.all().aggregate(max=Max(self.parameter_name)).get('max', 0)
+        total = self.q.all().count()
+
+        min_value = self.q.all().aggregate(
+            min=Min(self.parameter_name)
+        ).get('min', 0)
+
+        if total > 1:
+            max_value = self.q.all().aggregate(
+                max=Max(self.parameter_name)
+            ).get('max', 0)
+        else:
+            max_value = None
 
         if isinstance(self.field, (FloatField, DecimalField)):
             decimals = self.MAX_DECIMALS
