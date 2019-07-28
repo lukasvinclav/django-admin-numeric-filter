@@ -6,7 +6,7 @@
 ![](https://img.shields.io/badge/Django-2.0+-green.svg?style=flat-square)
 ![](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)
 
-django-admin-numeric-filter provides you several filter classes for Django admin which you can use to filter results in change list. It works in **list_filter** when a field name is defined as list where the first value is field name and second one is custom filter class (you can find classes below). 
+django-admin-numeric-filter provides you several filter classes for Django admin which you can use to filter results in change list. It works in **list_filter** when a field name is defined as list where the first value is field name and second one is custom filter class (you can find classes below).
 
 Don't forget to inherit your model admin from **admin_actions.admin.NumericFilterModelAdmin** to load custom CSS styles and JavaScript files declared in inner Media class.
 
@@ -16,10 +16,6 @@ Don't forget to inherit your model admin from **admin_actions.admin.NumericFilte
 
 ```bash
 pip install django-admin-numeric-filter
-```
-
-```bash
-pip install git+https://git@github.com/lukasvinclav/django-admin-numeric-filter.git
 ```
 
 2. Add **admin_numeric_filter** into **INSTALLED_APPS** in your settings file before **django.contrib.admin**.
