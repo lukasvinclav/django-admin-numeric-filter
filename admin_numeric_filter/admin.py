@@ -29,7 +29,7 @@ class SingleNumericFilter(admin.FieldListFilter):
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
 
-        if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoFiled)):
+        if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
             raise TypeError('Class {} is not supported for {}.'.format(type(self.field), self.__class__.__name__))
 
         self.request = request
