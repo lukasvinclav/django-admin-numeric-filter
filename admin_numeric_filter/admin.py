@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin.utils import reverse_field_path
 from django.db.models import Max, Min
-from django.db.models.fields import DecimalField, FloatField, IntegerField
+from django.db.models.fields import DecimalField, FloatField, IntegerField, AutoField
 
 from .forms import RangeNumericForm, SingleNumericForm, SliderNumericForm
 
@@ -29,7 +29,7 @@ class SingleNumericFilter(admin.FieldListFilter):
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
 
-        if not isinstance(field, (DecimalField, IntegerField, FloatField)):
+        if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoFiled)):
             raise TypeError('Class {} is not supported for {}.'.format(type(self.field), self.__class__.__name__))
 
         self.request = request
@@ -67,7 +67,7 @@ class RangeNumericFilter(admin.FieldListFilter):
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
 
-        if not isinstance(field, (DecimalField, IntegerField, FloatField)):
+        if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
             raise TypeError('Class {} is not supported for {}.'.format(type(self.field), self.__class__.__name__))
 
         self.request = request
