@@ -10,7 +10,7 @@
 
         <h3>{% blocktrans with filter_title=title %}By {{ filter_title }}{% endblocktrans %}</h3>
 
-        {% if choice.min or choice.min == 0 and choice.max or choice.max == 0 and choice.step %}
+        {% if choice.min is not None and choice.max is not None and choice.step %}
             <div class="admin-numeric-filter-slider-tooltips">
                 <span class="admin-numeric-filter-slider-tooltip-from">{{ choice.value_from }}</span>
                 <span class="admin-numeric-filter-slider-tooltip-to">{{ choice.value_to }}</span>
