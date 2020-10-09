@@ -28,15 +28,13 @@ class SingleNumericFilter(admin.FieldListFilter):
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
-
         if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
             raise TypeError('Class {} is not supported for {}.'.format(type(self.field), self.__class__.__name__))
 
         self.request = request
-
         if self.parameter_name is None:
-            self.parameter_name = self.field.name
 
+            self.parameter_name = self.field_path
         if self.parameter_name in params:
             value = params.pop(self.parameter_name)
             self.used_parameters[self.parameter_name] = value
@@ -66,22 +64,20 @@ class RangeNumericFilter(admin.FieldListFilter):
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
-
         if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
             raise TypeError('Class {} is not supported for {}.'.format(type(self.field), self.__class__.__name__))
 
         self.request = request
-
         if self.parameter_name is None:
-            self.parameter_name = self.field.name
+            self.parameter_name = self.field_path
 
         if self.parameter_name + '_from' in params:
-            value = params.pop(self.parameter_name + '_from')
-            self.used_parameters[self.parameter_name + '_from'] = value
+            value = params.pop(self.field_path + '_from')
+            self.used_parameters[self.field_path + '_from'] = value
 
         if self.parameter_name + '_to' in params:
-            value = params.pop(self.parameter_name + '_to')
-            self.used_parameters[self.parameter_name + '_to'] = value
+            value = params.pop(self.field_path + '_to')
+            self.used_parameters[self.field_path + '_to'] = value
 
     def queryset(self, request, queryset):
         filters = {}
@@ -128,16 +124,10 @@ class SliderNumericFilter(RangeNumericFilter):
         super().__init__(field, request, params, model, model_admin, field_path)
 
         self.field = field
-        parent_model, reverse_path = reverse_field_path(model, field_path)
-
-        if model == parent_model:
-            self.q = model_admin.get_queryset(request)
-        else:
-            self.q = parent_model._default_manager.all()
+        self.q = model_admin.get_queryset(request)
 
     def choices(self, changelist):
         total = self.q.all().count()
-
         min_value = self.q.all().aggregate(
             min=Min(self.parameter_name)
         ).get('min', 0)
