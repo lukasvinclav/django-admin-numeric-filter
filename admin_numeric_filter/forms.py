@@ -1,8 +1,13 @@
 from django import forms
+from django.forms import Media
 try:
     from django.utils.translation import ugettext_lazy as _  # until django 3.2
 except ImportError:
     from django.utils.translation import gettext_lazy as _  # from django 4
+
+
+
+NUMERIC_FILTER_CSS = 'css/admin-numeric-filter.css'
 
 
 class SingleNumericForm(forms.Form):
@@ -10,15 +15,12 @@ class SingleNumericForm(forms.Form):
         name = kwargs.pop('name')
         super().__init__(*args, **kwargs)
 
-        self.fields[name] = forms.FloatField(label='', required=False, 
-            widget=forms.NumberInput(attrs={'placeholder': _('Value')}))        
+        self.fields[name] = forms.FloatField(label='', required=False,
+            widget=forms.NumberInput(attrs={'placeholder': _('Value')}))
 
-    class Media:
-        css = {
-            'all': (
-                'css/admin-numeric-filter.css',
-            )
-        }
+    @property
+    def media(self):
+        return super().media + Media(css=[self.NUMERIC_FILTER_CSS])
 
 
 class RangeNumericForm(forms.Form):
@@ -28,17 +30,14 @@ class RangeNumericForm(forms.Form):
         self.name = kwargs.pop('name')
         super().__init__(*args, **kwargs)
 
-        self.fields[self.name + '_from'] = forms.FloatField(label='', required=False, 
+        self.fields[self.name + '_from'] = forms.FloatField(label='', required=False,
             widget=forms.NumberInput(attrs={'placeholder': _('From')}))
-        self.fields[self.name + '_to'] = forms.FloatField(label='', required=False, 
+        self.fields[self.name + '_to'] = forms.FloatField(label='', required=False,
             widget=forms.NumberInput(attrs={'placeholder': _('To')}))
 
-    class Media:
-        css = {
-            'all': (
-                'css/admin-numeric-filter.css',
-            )
-        }
+    @property
+    def media(self):
+        return super().media + Media(css=[self.NUMERIC_FILTER_CSS])
 
 
 class SliderNumericForm(RangeNumericForm):
