@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "django-admin-numeric-filter"
+version = "0.1.7"
+description = "Numeric filters for Django admin"
+license = "MIT"
+readme = "README.md"
+authors = []
+homepage = "https://github.com/lukasvinclav/django-admin-numeric-filter"
+repository = "https://github.com/lukasvinclav/django-admin-numeric-filter"
+packages = [
+    { include = "admin_numeric_filter", from = "src" },
+]
+keywords = [
+    "django",
+    "admin",
+    "numeric",
+    "filter",
+]
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Operating System :: OS Independent",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Framework :: Django",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.6"
+django = ">=3.2"
+
+[build-system]
+requires = ["poetry>=1.0"]
+build-backend = "poetry.masonry.api"
