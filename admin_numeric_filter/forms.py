@@ -1,6 +1,10 @@
 from django import forms
 from django.forms import Media
-from django.utils.translation import gettext_lazy as _
+try:
+    from django.utils.translation import ugettext_lazy as _  # until django 3.2
+except ImportError:
+    from django.utils.translation import gettext_lazy as _  # from django 4
+
 
 
 NUMERIC_FILTER_CSS = 'css/admin-numeric-filter.css'
