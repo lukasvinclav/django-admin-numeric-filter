@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-admin-numeric-filter"
-version = "0.1.7"
+version = "0.1.8"
 description = "Numeric filters for Django admin"
 license = "MIT"
 readme = "README.md"
@@ -8,7 +8,7 @@ authors = []
 homepage = "https://github.com/lukasvinclav/django-admin-numeric-filter"
 repository = "https://github.com/lukasvinclav/django-admin-numeric-filter"
 packages = [
-    { include = "admin_numeric_filter", from = "src" },
+    { include = "admin_numeric_filter" },
 ]
 keywords = [
     "django",

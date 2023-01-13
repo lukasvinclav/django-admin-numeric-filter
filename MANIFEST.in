@@ -1,2 +1,0 @@
-recursive-include admin_numeric_filter/templates *
-recursive-include admin_numeric_filter/static *
