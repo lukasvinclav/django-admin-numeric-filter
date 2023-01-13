@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-admin-numeric-filter"
-version = "0.1.7"
+version = "0.1.8"
 description = "Numeric filters for Django admin"
 license = "MIT"
 readme = "README.md"
