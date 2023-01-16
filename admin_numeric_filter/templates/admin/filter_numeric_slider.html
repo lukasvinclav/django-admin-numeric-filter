@@ -9,7 +9,7 @@
             {% endif %}
         {% endfor %}
 
-        <h3>{% blocktrans with filter_title=title %}By {{ filter_title }}{% endblocktrans %}</h3>
+        <h3>{% blocktrans with filter_title=title %} By {{ filter_title }} {% endblocktrans %}</h3>
 
         {% if choice.min is not None and choice.max is not None and choice.step %}
             <div class="admin-numeric-filter-slider-tooltips">
