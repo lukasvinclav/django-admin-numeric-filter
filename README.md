@@ -2,7 +2,7 @@
 
 # django-admin-numeric-filter
 
-![](https://img.shields.io/badge/Version-0.1.8-orange.svg?style=flat-square)
+![](https://img.shields.io/badge/Version-0.1.9-orange.svg?style=flat-square)
 ![](https://img.shields.io/badge/Django-2.0+-green.svg?style=flat-square)
 ![](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)
 
