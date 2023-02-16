@@ -1,4 +1,4 @@
-![Screenshot](https://github.com/lukasvinclav/django-admin-numeric-filter/raw/master/screenshot.png)
+![Screenshot](https://github.com/lukasvinclav/django-admin-numeric-filter/raw/main/screenshot.png)
 
 # django-admin-numeric-filter
 
